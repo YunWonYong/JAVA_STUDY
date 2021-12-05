@@ -9,6 +9,7 @@ public class Tests3 {
 	@Test
 	public void test() {
 		fail("Not yet implemented");
+		System.out.println("false");
 	}
 
 }
