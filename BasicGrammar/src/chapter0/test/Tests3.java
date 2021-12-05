@@ -10,6 +10,7 @@ public class Tests3 {
 	public void test() {
 		fail("Not yet implemented");
 		System.out.println("false");
+		System.out.println("false");
 	}
 
 }
