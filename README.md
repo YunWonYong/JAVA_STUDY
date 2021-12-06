@@ -11,14 +11,14 @@
 * junit4
 * Eclipse IDE
 ### 3. 진행표  
->#### 0. 첫 미팅
->##### 0-1. github 협업 맺기
->##### 0-2. project 내려 받기 (pull)
->##### 0-3. Main 쓰레스를 이용하여 실행해보기
->##### 0-4. Run Configurations를 이용해 Main 쓰레스에 인자 사용하기
->##### 0-5. junit4 알아보기
->##### 0-6. test case와 test suite 알아보기
->##### 0-7. 숙제: github 계정에 SSH토큰을 생성 후 등록하여 remote에 push하기
+>#### 0. 첫 미팅 [2021-12-05]
+>>##### 0-1. github 협업 맺기
+>>##### 0-2. project 내려 받기 (pull)
+>>##### 0-3. Main 쓰레스를 이용하여 실행해보기
+>>##### 0-4. Run Configurations를 이용해 Main 쓰레스에 인자 사용하기
+>>##### 0-5. junit4 알아보기
+>>##### 0-6. test case와 test suite 알아보기
+>>##### 0-7. 숙제: github 계정에 SSH토큰을 생성 후 등록하여 remote에 push하기
 >#### 1. 변수와 타입 1
 >>##### 1-1. 변수란?
 >>##### 1-2. 기본 타입
