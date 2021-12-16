@@ -1,7 +1,7 @@
 # JAVA_STUDY
 ### 1. 참여 인원
 
-|[<img src="https://user-images.githubusercontent.com/59129553/144731856-0de13932-cc21-44a6-8f85-e9fb195da2fd.png" width="230px;" alt=""/>](https://github.com/YunWonYong)|<img src="https://user-images.githubusercontent.com/59129553/144744436-9665b374-5b9d-4dec-8222-390308f9220b.png" width="230px;" alt=""/>|(https://github.com/YunWonYong)|<img src="https://user-images.githubusercontent.com/59129553/146366354-1b2c8ff3-daf8-4c5c-94db-c4a5e6e522f0.png" width="230px;" alt=""/>|
+|[<img src="https://user-images.githubusercontent.com/59129553/144731856-0de13932-cc21-44a6-8f85-e9fb195da2fd.png" width="230px;" alt=""/>](https://github.com/YunWonYong)|[<img src="https://user-images.githubusercontent.com/59129553/144744436-9665b374-5b9d-4dec-8222-390308f9220b.png" width="230px;" alt=""/>](https://github.com/Lee-jh01)|[<img src="https://user-images.githubusercontent.com/59129553/146366354-1b2c8ff3-daf8-4c5c-94db-c4a5e6e522f0.png" width="230px;" alt=""/>](https://github.com/seohyang0)|
 |:---:|:---:|:---:|
 |윤원용|지서향|이정희|
 
