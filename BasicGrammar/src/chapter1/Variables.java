@@ -16,9 +16,19 @@ public class Variables {
 	public byte bMax = Byte.MAX_VALUE; // wrap    
 	public byte bMin = Byte.MIN_VALUE;            
 	                                              
-	public short sMax = 0;                        
-	public short sMin = 0;     
+	public short sMax = Short.MAX_VALUE;                        
+	public short sMin = Short.MIN_VALUE;     
 	
 	public int iMax = Integer.MAX_VALUE; // 명사 + 명사 _ -> 언더스네이크 | 명사 + 명사 M -> 카멜문법 숙제4 
 	public int iMin = Integer.MIN_VALUE;
+	
+	public long lMax = Long.MAX_VALUE;
+	public long lMin = Long.MIN_VALUE;
+	
+	public float fMax = Float.MAX_VALUE;
+	public float fMin = Float.MIN_VALUE;
+	
+	public double dMax = Double.MAX_VALUE;
+	public double dMin = Double.MIN_VALUE;
+	
 }

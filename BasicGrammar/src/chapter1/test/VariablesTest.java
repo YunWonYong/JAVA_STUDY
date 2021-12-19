@@ -24,7 +24,7 @@ public class VariablesTest {
 		assertTrue(variables.bl == false);
 		assertTrue(variables.b == 0);	
 		assertTrue(variables.s == 0);	
-		assertTrue(variables.c == '0'); // 숙제 1
+		assertTrue(variables.c == 0); // 숙제 1
 		assertTrue(variables.i == 0);
 		assertTrue(variables.l == 0l); // 숙제 2
 		assertTrue(variables.f == 0.0f);
@@ -36,14 +36,20 @@ public class VariablesTest {
 	public void initMaxValueTest() { // 숙제 3
 		assertTrue(variables.bT == Boolean.TRUE);
 		assertTrue(variables.bMax == Byte.MAX_VALUE);
-		assertTrue(variables.sMax == Short.MAX_VALUE);	
+		assertTrue(variables.sMax == Short.MAX_VALUE);
+		assertTrue(variables.lMax == Long.MAX_VALUE);
+		assertTrue(variables.fMax == Float.MAX_VALUE);
+		assertTrue(variables.dMax == Double.MAX_VALUE);
 	}
 	
 
 	@Test
 	public void initMinValueTest() { // 숙제 3
 		assertTrue(variables.bF == Boolean.FALSE);
-		assertTrue(variables.bMin == Byte.MIN_VALUE);	
+		assertTrue(variables.bMin == Byte.MIN_VALUE);
+		assertTrue(variables.lMin == Long.MIN_VALUE);
+		assertTrue(variables.fMin == Float.MIN_VALUE);
+		assertTrue(variables.dMin == Double.MIN_VALUE);
 	}
 	
 	@Test
