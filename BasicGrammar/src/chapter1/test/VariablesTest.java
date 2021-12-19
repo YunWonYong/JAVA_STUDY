@@ -47,7 +47,7 @@ public class VariablesTest {
 	
 	@Test
 	public void molTest() {
-		byte b = Byte.MAX_VALUE; // 127 + 1 = 128? 2의 보수
+		byte b = Byte.MAX_VALUE; // 127 + 1 = 128? 2의 보수   
 		b = (byte) (b + 1); // 의미없는 값! 
 		assertFalse(String.format("this b variable: %d", b), b == 128);
 		
