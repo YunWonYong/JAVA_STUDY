@@ -35,7 +35,8 @@ public class VariablesTest {
 	@Test
 	public void initMaxValueTest() { // 숙제 3
 		assertTrue(variables.bT == Boolean.TRUE);
-		assertTrue(variables.bMax == Byte.MAX_VALUE);	
+		assertTrue(variables.bMax == Byte.MAX_VALUE);
+		assertTrue(variables.sMax == Short.MAX_VALUE);	
 	}
 	
 
