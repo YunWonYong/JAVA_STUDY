@@ -1,14 +1,14 @@
 package chapter1;
 
 public class Variables {                          
-	public boolean bl = true; // false            
-	public char c = 65; // 2byte 유니코드 /u000-> ' '
-	public byte b = 'A'; // 0b  0000 0000         
-	public short s = 'A'; // 0s                   
-	public int i = 2_000_000_000; // ? null x 0i  
-	public long l = 20_000_000_000l; // 0L        
-	public float f = 1.000000f; // 0.0f           
-	public double d = 1.000000; // 0.0            
+	public boolean bl; // false            
+	public char c; // 2byte 유니코드 /u000-> ' '
+	public byte b; // 0b  0000 0000         
+	public short s; // 0s                   
+	public int i; // ? null x 0i  
+	public long l; // 0L        
+	public float f ; // 0.0f           
+	public double d; // 0.0            
 	                                              
 	public boolean bF = Boolean.FALSE;            
 	public boolean bT = Boolean.TRUE;             

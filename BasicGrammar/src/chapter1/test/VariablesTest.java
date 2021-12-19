@@ -24,7 +24,7 @@ public class VariablesTest {
 		assertTrue(variables.bl == false);
 		assertTrue(variables.b == 0);	
 		assertTrue(variables.s == 0);	
-		// assertTrue(variables.c == '/u000'); // 숙제 1
+		assertTrue(variables.c == '0'); // 숙제 1
 		assertTrue(variables.i == 0);
 		assertTrue(variables.l == 0l); // 숙제 2
 		assertTrue(variables.f == 0.0f);
