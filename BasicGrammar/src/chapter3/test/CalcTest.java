@@ -22,13 +22,13 @@ public class CalcTest {
 		assertEquals(a * b, Calc.mul(a, b));
 		assertEquals(a / b, Calc.div(a, b));
 		assertEquals(a % b, Calc.rem(a, b));
+		scanner.close();
 	}
 	
 	@Test
 	public void testUnary() { // 단항연산자
 		Scanner scanner = new Scanner(System.in);
 		int a;
-		boolean b;
 		System.out.print("숫자 a를 입력하세요>> ");
 		a = scanner.nextInt();
 		//int result = a + b;
@@ -38,9 +38,6 @@ public class CalcTest {
 		assertEquals(a++, Calc.inc(a));
 		assertEquals(a--, Calc.dec(a));
 		assertEquals(~a, Calc.til(a));
-
+		scanner.close();
 	}
-	
-	
-
 }
