@@ -10,30 +10,32 @@ public class JDBCMangerTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuilderIllegalArgumentsException() throws Exception{
-		new JDBCManager.Builder().setDriver(null).build();
+		new JDBCManager.Builder(DBMS.ORACLE).setDriver(null).build();
 	}
 	
 	@Test
-	public void testGetJDBCManager() throws Exception { //AAA => 준비, 실행, 단언
-		JDBCManager jdbcManager = new JDBCManager.Builder()
-										 .setDriver("oracle.jdbc.OracleDriver")
+	public void testGetOracleJDBCManager() throws Exception { //AAA => 준비, 실행, 단언
+		JDBCManager jdbcManager = new JDBCManager.Builder(DBMS.ORACLE)
 										 .setUrl("jdbc:oracle:thin:@localhost:1521:oracle")
 										 .setUserName("ywy")
 										 .setPassword("921107")
 										 .build();
 		assertTrue(jdbcManager != null);
+		assertTrue(jdbcManager.getConnection() != null);
+		assertTrue(jdbcManager.getConnection() instanceof Connection);
 	}
 	
 	@Test
-	public void testGetConnection() throws Exception { //AAA => 준비, 실행, 단언
-		JDBCManager jdbcManager = new JDBCManager.Builder()
-										 .setDriver("oracle.jdbc.OracleDriver")
-										 .setUrl("jdbc:oracle:thin:@localhost:1521:oracle")
-										 .setUserName("ywy")
+	public void testGetMySqlJDBCManager() throws Exception { //AAA => 준비, 실행, 단언
+		JDBCManager jdbcManager = new JDBCManager.Builder(DBMS.MY_SQL)
+										 .setUrl("jdbc:mysql://localhost:3306/world?serverTimezone=UTC")
+										 .setUserName("root")
 										 .setPassword("921107")
 										 .build();
+		assertTrue(jdbcManager != null);
 		assertTrue(jdbcManager.getConnection() != null);
 		assertTrue(jdbcManager.getConnection() instanceof Connection);
+		
 	}
 	
 }

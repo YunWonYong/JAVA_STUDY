@@ -6,10 +6,18 @@ import java.sql.DriverManager;
 //SOLID => SRP, OCP, LSP, ISP, DIP
 public class JDBCManager {
 	public static class Builder { //SRP ==> Single Responsibility Principle ==> 높은 응집도 유도할 수 있음., DIR ==> Don't your self repeat
+		private final String DEFAULT_DRIVER;
 		private String driver;
 		private String url;
 		private String userName;
 		private String password;
+		
+		public Builder() {
+			DEFAULT_DRIVER = null;
+		}
+		public Builder(DBMS dbms) {
+			DEFAULT_DRIVER = dbms.getDefaultDriver();
+		}
 		
 		public Builder setDriver(String driver) {
 			this.driver = driver;
@@ -32,18 +40,30 @@ public class JDBCManager {
 		}
 		
 		public JDBCManager build() throws Exception {
-			initArgumentValidate();
-			Class.forName(driver);
-			return new JDBCManager(DriverManager.getConnection(url, userName, password));
+			return initArgumentValidate().driverLoad().managerInstance();
 		}
 		
-		private void initArgumentValidate() {
-			String[] arguements = new String[] {this.driver, this.url, this.userName, this.password};
+		private String getDriver() {
+			return Utility.isNullOrBlank(driver) ? DEFAULT_DRIVER: driver; 
+		}
+		
+		private Builder initArgumentValidate() {
+			String[] arguements = new String[] {getDriver(), this.url, this.userName, this.password};
 			for (String arguement : arguements) {
 				if (Utility.isNullOrBlank(arguement)) {
 					throw new IllegalArgumentException(String.format("not init variable: %s", arguement));
 				}
 			}
+			return this;
+		}
+		
+		private Builder driverLoad() throws Exception {
+			Class.forName(Utility.isNullOrBlank(driver) ? DEFAULT_DRIVER : driver);
+			return this;
+		}
+		
+		private JDBCManager managerInstance() throws Exception {
+			return new JDBCManager(DriverManager.getConnection(url, userName, password));
 		}
 		
 	}
