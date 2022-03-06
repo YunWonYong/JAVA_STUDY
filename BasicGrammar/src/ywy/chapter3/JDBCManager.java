@@ -2,6 +2,8 @@ package ywy.chapter3;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 //SOLID => SRP, OCP, LSP, ISP, DIP
@@ -98,5 +100,17 @@ public class JDBCManager {
 	
 	public Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(info.url, info.userName, info.password);
+	}
+	
+	public void close(Object...objs) throws Exception {
+		for (Object obj: objs) {
+			if (obj instanceof ResultSet) {
+				((ResultSet) obj).close();
+			} else if (obj instanceof PreparedStatement) {
+				((PreparedStatement) obj).close();
+			} else if (obj instanceof Connection) {
+				((Connection) obj).close();
+			}
+		}
 	}
 }
