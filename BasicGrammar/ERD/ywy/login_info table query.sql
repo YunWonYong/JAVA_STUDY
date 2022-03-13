@@ -4,10 +4,8 @@ DELETE
    AND  PASSWORD = '1234';
   
 INSERT INTO login_info(ID, PASSWORD)
-VALUES ('ywyi1992', '1234');
-
-INSERT INTO login_info(ID, PASSWORD)
-VALUES ('ywyi1993', '1234');
+VALUES ('ywyi1992', '1234')
+     , ('ywyi1993', '1234');
 
 /*
 * 회원 목록 조회 쿼리
@@ -29,5 +27,5 @@ SELECT  ID
 SELECT  ID
      ,  PASSWORD 
   FROM  LOGIN_INFO
- WHERE  ID = 'ywyi1992'
-   AND  PASSWORD = '123';
+ WHERE  ID = 'ywyi1993'
+   AND  PASSWORD = '1234';

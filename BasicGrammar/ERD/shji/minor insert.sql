@@ -1,4 +1,4 @@
-SELECT * FROM major;
+SELECT * FROM MAJOR;
 SELECT * FROM MINOR;
 
 -- MAJOR_CODE별로 1,2,3... 순서로 채번이 되어야 하는데 minor 테이블에 해당 major가 없어서 null값 insert 불가함
@@ -15,7 +15,7 @@ VALUES
 	  FROM minor
 	 WHERE MAJOR_CODE = '01') AS A),			
 '01',			
-'00001',			
+'P000000001',			
 '데이터베이스설계',
 3,				
 'Y'),
@@ -26,7 +26,7 @@ VALUES
 	  FROM minor 
      WHERE MAJOR_CODE = '02') AS A),			
 '02',			
-'00003',			
+'P000000003',			
 '경영학원론',
 2,				
 'Y'),
@@ -37,7 +37,7 @@ VALUES
 	  FROM minor
 	  WHERE MAJOR_CODE = '03') AS A),			
 '03',			
-'00002',			
+'P000000002',			
 '통계학',
 3,				
 'Y');
