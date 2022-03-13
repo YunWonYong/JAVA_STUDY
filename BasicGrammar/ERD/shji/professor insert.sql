@@ -1,0 +1,42 @@
+-- ifnull
+DELETE
+  FROM  MAJOR;
+  
+DELETE
+  FROM  MINOR;
+  
+DELETE
+  FROM  professor;
+  
+INSERT INTO professor (
+PROFESSOR_CODE,		ID, 	SALARY,		ENT_DATE,
+RET_DATE,			USE_YN 
+)
+VALUES 
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),		
+'shji',		
+2000000,	
+20220227,
+99991231,	
+'Y'),
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),			
+'test',		
+3000000,	
+20220302,
+99991231,	
+'Y'),
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),			
+'hong',	
+5000000,	
+20220302,
+99991231,		
+'Y');
+ 
+ SELECT *
+  FROM professor;
