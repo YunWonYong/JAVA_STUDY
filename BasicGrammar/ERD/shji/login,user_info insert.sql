@@ -13,13 +13,13 @@ ID,				NAME,				ENG_NAME,		GENDER,
 BIRTH_DATE,		REAL_NUMBER,		ZIP_CODE,		ADDRESS,
 ADDRESS_DTL,	EMAIL,				EMAIL_ADDRESS,	PHONE_NUMBER)
 VALUES 
-('shji', 		'지서향',				'Ji Seohyang',  0,
+('shji', 		'지서향',				'Ji Seohyang',  'G',
 20010723,		'0107231111111',  	11111,	    	'경기도 안산시',
 '000동 0000호',	'ksk076', 		  	'naver.com',	'01012345678'),
-('test', 		'테스트',				'Test', 		1,
+('test', 		'테스트',				'Test', 		'M',
 20220302,		'2203021111111',  	22222,	    	'서울시',
 '222동 2002호',	'test', 		  	'daum.net',		'01022222222'),
-('hong', 		'홍길동',				'Hong gildong',  0,
+('hong', 		'홍길동',				'Hong gildong',  'G',
 20000302,		'0003021111111',  	22222,	    	'광명시',
 '302동 1702호',	'hong0302', 		'gmail.com',	'01034567890');
 
