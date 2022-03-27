@@ -21,6 +21,72 @@ VALUES
 'Y'),
 ((SELECT A.CODE
   FROM (
+	SELECT CONCAT('01',
+		 (LPAD(IFNULL(MAX(CAST(RIGHT(MINOR_CODE, 2) AS unsigned)),0) + 1, 2, 0))) AS CODE
+	  FROM minor
+	 WHERE MAJOR_CODE = '01') AS A),			
+'01',			
+'P000000001',			
+'JAVA',
+3,				
+'Y'),
+((SELECT A.CODE
+  FROM (
+	SELECT CONCAT('01',
+		 (LPAD(IFNULL(MAX(CAST(RIGHT(MINOR_CODE, 2) AS unsigned)),0) + 1, 2, 0))) AS CODE
+	  FROM minor
+	 WHERE MAJOR_CODE = '01') AS A),			
+'01',			
+'P000000001',			
+'C++',
+3,				
+'Y'),
+((SELECT A.CODE
+  FROM (
+	SELECT CONCAT('01',
+		 (LPAD(IFNULL(MAX(CAST(RIGHT(MINOR_CODE, 2) AS unsigned)),0) + 1, 2, 0))) AS CODE
+	  FROM minor
+	 WHERE MAJOR_CODE = '01') AS A),			
+'01',			
+'P000000001',			
+'C',
+3,				
+'Y'),
+((SELECT A.CODE
+  FROM (
+	SELECT CONCAT('01',
+		 (LPAD(IFNULL(MAX(CAST(RIGHT(MINOR_CODE, 2) AS unsigned)),0) + 1, 2, 0))) AS CODE
+	  FROM minor
+	 WHERE MAJOR_CODE = '01') AS A),			
+'01',			
+'P000000001',			
+'Algorithm',
+3,				
+'Y'),
+((SELECT A.CODE
+  FROM (
+	SELECT CONCAT('01',
+		 (LPAD(IFNULL(MAX(CAST(RIGHT(MINOR_CODE, 2) AS unsigned)),0) + 1, 2, 0))) AS CODE
+	  FROM minor
+	 WHERE MAJOR_CODE = '01') AS A),			
+'01',			
+'P000000001',			
+'HTML5',
+3,				
+'Y'),
+((SELECT A.CODE
+  FROM (
+	SELECT CONCAT('01',
+		 (LPAD(IFNULL(MAX(CAST(RIGHT(MINOR_CODE, 2) AS unsigned)),0) + 1, 2, 0))) AS CODE
+	  FROM minor
+	 WHERE MAJOR_CODE = '01') AS A),			
+'01',			
+'P000000001',			
+'JSP 프로그래밍',
+3,				
+'Y'),
+((SELECT A.CODE
+  FROM (
 	SELECT CONCAT('02',
 		 (LPAD(IFNULL(MAX(CAST(RIGHT(MINOR_CODE, 2) AS unsigned)),0) + 1, 2, 0))) AS CODE
 	  FROM minor 
@@ -42,5 +108,7 @@ VALUES
 3,				
 'Y');
   
+DELETE 
+  FROM  minor
 SELECT *
   FROM minor;
