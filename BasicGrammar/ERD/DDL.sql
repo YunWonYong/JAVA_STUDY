@@ -18,11 +18,11 @@ CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`LOGIN_INFO`
+-- Table `mydb`.`login_info`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`LOGIN_INFO` ;
+DROP TABLE IF EXISTS `mydb`.`login_info` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`LOGIN_INFO` (
+CREATE TABLE IF NOT EXISTS `mydb`.`login_info` (
   `ID` VARCHAR(15) CHARACTER SET 'utf8' NOT NULL,
   `PASSWORD` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   `PASSWORD_ERROR_COUNT` INT NULL DEFAULT 0,
@@ -30,13 +30,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`LOGIN_INFO` (
   PRIMARY KEY (`ID`))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
--- Table `mydb`.`USER_INFO`
+-- Table `mydb`.`user_info`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`USER_INFO` ;
+DROP TABLE IF EXISTS `mydb`.`user_info` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`USER_INFO` (
+CREATE TABLE IF NOT EXISTS `mydb`.`user_info` (
   `ID` VARCHAR(15) CHARACTER SET 'utf8' NOT NULL,
   `NAME` VARCHAR(45) NOT NULL,
   `ENG_NAME` VARCHAR(45) NULL,
@@ -50,21 +49,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`USER_INFO` (
   `EMAIL_ADDRESS` VARCHAR(30) NOT NULL,
   `PHONE_NUMBER` VARCHAR(22) NOT NULL,
   PRIMARY KEY (`ID`),
-  INDEX `fk_USER_INFO_LOGIN_INFO_idx` (`ID` ASC),
-  CONSTRAINT `fk_USER_INFO_LOGIN_INFO`
+  INDEX `fk_user_info_login_info_idx` (`ID` ASC),
+  CONSTRAINT `fk_user_info_login_info`
     FOREIGN KEY (`ID`)
-    REFERENCES `mydb`.`LOGIN_INFO` (`ID`)
+    REFERENCES `mydb`.`login_info` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`PROFESSOR`
+-- Table `mydb`.`profrssor`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`PROFESSOR` ;
+DROP TABLE IF EXISTS `mydb`.`professor` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`PROFESSOR` (
+CREATE TABLE IF NOT EXISTS `mydb`.`professor` (
   `PROFESSOR_CODE` VARCHAR(10) NOT NULL,
   `ID` VARCHAR(15) CHARACTER SET 'utf8' NOT NULL,
   `SALARY` INT NOT NULL,
@@ -82,11 +81,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`STUDENT`
+-- Table `mydb`.`student`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`STUDENT` ;
+DROP TABLE IF EXISTS `mydb`.`student` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`STUDENT` (
+CREATE TABLE IF NOT EXISTS `mydb`.`student` (
   `STUDENT_CODE` VARCHAR(10) NOT NULL,
   `ID` VARCHAR(15) CHARACTER SET 'utf8' NOT NULL,
   `ENT_DATE` NCHAR(8) NOT NULL COMMENT '입학일',
@@ -103,11 +102,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`MAJOR`
+-- Table `mydb`.`major`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`MAJOR` ;
+DROP TABLE IF EXISTS `mydb`.`major` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`MAJOR` (
+CREATE TABLE IF NOT EXISTS `mydb`.`major` (
   `MAJOR_CODE` NCHAR(2) NOT NULL COMMENT '학과_코드',
   `PROFESSOR_HEAD_USER_CODE` VARCHAR(10) NOT NULL COMMENT '학과_지도교수',
   `MAJOR_NAME` VARCHAR(45) NOT NULL COMMENT '학과_명',
@@ -124,11 +123,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`MINOR`
+-- Table `mydb`.`minor`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`MINOR` ;
+DROP TABLE IF EXISTS `mydb`.`minor` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`MINOR` (
+CREATE TABLE IF NOT EXISTS `mydb`.`minor` (
   `MINOR_CODE` NCHAR(4) NOT NULL COMMENT '과목_코드',
   `MAJOR_CODE` NCHAR(2) NOT NULL COMMENT '학과_코드',
   `PROFESSOR_USER_CODE` VARCHAR(10) NOT NULL COMMENT '과목_지도교수',
@@ -152,11 +151,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`STUDENT_GRADE`
+-- Table `mydb`.`student_grade`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`STUDENT_GRADE` ;
+DROP TABLE IF EXISTS `mydb`.`student_grade` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`STUDENT_GRADE` (
+CREATE TABLE IF NOT EXISTS `mydb`.`student_grade` (
   `GRADE` NCHAR(1) NOT NULL,
   `STUDENT_CODE` VARCHAR(10) NOT NULL,
   `MAJOR_CODE` NCHAR(2) NOT NULL,
@@ -175,11 +174,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`STUDENT_GRADE` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 -- -----------------------------------------------------
--- Table `mydb`.`STUDENT_SEMESTER`
+-- Table `mydb`.`student_semester`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`STUDENT_SEMESTER` ;
+DROP TABLE IF EXISTS `mydb`.`student_semester` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`STUDENT_SEMESTER` (
+CREATE TABLE IF NOT EXISTS `mydb`.`student_semester` (
   `SEMESTER` NCHAR(1) NOT NULL,
   `GRADE` NCHAR(1) NOT NULL,
   `STUDENT_CODE` VARCHAR(10) NOT NULL,
