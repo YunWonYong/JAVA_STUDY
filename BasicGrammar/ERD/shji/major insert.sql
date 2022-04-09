@@ -40,3 +40,69 @@ VALUES
 
 SELECT *
   FROM major;
+
+-- 학과추가
+INSERT INTO major (
+MAJOR_CODE,		PROFESSOR_HEAD_USER_CODE,	MAJOR_NAME,		MAJOR_PHONE_NUMBER,
+USE_YN
+)
+VALUES 
+((SELECT A.CODE
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(MAJOR_CODE AS unsigned)),0) + 1, 2, 0) AS CODE
+          FROM major) AS A),		
+'P000000004',		
+'영어영문학과',		
+'02-8542-1565',
+'Y'),
+((SELECT A.CODE
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(MAJOR_CODE AS unsigned)),0) + 1, 2, 0) AS CODE
+          FROM major) AS A),		
+'P000000005',		
+'실용음악과',		
+'02-5421-6547',
+'Y'),
+((SELECT A.CODE
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(MAJOR_CODE AS unsigned)),0) + 1, 2, 0) AS CODE
+          FROM major) AS A),		
+'P000000006',		
+'체육교육과',		
+'02-5841-9584',
+'Y'),
+((SELECT A.CODE
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(MAJOR_CODE AS unsigned)),0) + 1, 2, 0) AS CODE
+          FROM major) AS A),		
+'P000000007',		
+'언론정보과',		
+'02-5463-9756',
+'Y'),
+((SELECT A.CODE
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(MAJOR_CODE AS unsigned)),0) + 1, 2, 0) AS CODE
+          FROM major) AS A),		
+'P000000010',		
+'패션디자인과',		
+'02-8754-0123',
+'Y'),
+((SELECT A.CODE
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(MAJOR_CODE AS unsigned)),0) + 1, 2, 0) AS CODE
+          FROM major) AS A),		
+'P000000011',		
+'회화과',		
+'02-8496-2546',
+'Y'),
+((SELECT A.CODE
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(MAJOR_CODE AS unsigned)),0) + 1, 2, 0) AS CODE
+          FROM major) AS A),		
+'P000000012',		
+'광고홍보학과',		
+'02-9654-6423',
+'Y'),
+((SELECT A.CODE
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(MAJOR_CODE AS unsigned)),0) + 1, 2, 0) AS CODE
+          FROM major) AS A),		
+'P000000013',		
+'식품영양학과',		
+'02-9865-1234',
+'N');
+
+SELECT *
+  FROM major;
