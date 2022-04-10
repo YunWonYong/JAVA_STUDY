@@ -1,3 +1,4 @@
 /.metadata
-/BasicGrammar/src/ywy/chapter3/*.properties
-/BasicGrammar/.classpath
+*.properties
+*/.classpath
+*/.class
