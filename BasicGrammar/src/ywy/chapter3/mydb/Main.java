@@ -1,8 +1,11 @@
 package ywy.chapter3.mydb;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -11,15 +14,13 @@ import ywy.chapter3.JDBCManager;
 
 public class Main {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		JDBCManager db = null;
 		String resource = "D:\\github\\JAVA_STUDY\\BasicGrammar/src/ywy/chapter3/DB.properties";
-		String root = System.getProperty("java.class.path");
 		Properties p = new Properties();
 
 
 		try {
-
 			FileInputStream fis = new FileInputStream(resource);
 			p.load(new BufferedInputStream(fis));
 			db = new JDBCManager.Builder(DBMS.MY_SQL)
@@ -31,6 +32,7 @@ public class Main {
 			e.printStackTrace();
 			return;
 		}
+		
 		System.out.println("어서오세요. 이직 대학입니다.");
 		Scanner sc = new Scanner(System.in);
 		String cursor = null;
@@ -39,7 +41,12 @@ public class Main {
 			cursor = sc.nextLine();
 			switch(cursor) {
 			case "1":
-				login(sc);
+				if (login(sc, db)) {
+					System.out.println("로그인 성공");
+					sc.close();
+					return;
+				}
+				System.out.println("아이디와 비밀번호가 다릅니다.");
 				break;
 			case "2":
 				
@@ -62,11 +69,39 @@ public class Main {
 		}
 	}
 	
-	private static void login(Scanner sc) {
+	private static boolean login(Scanner sc, JDBCManager db) throws Exception {
+		System.out.println("아이디를 입력해 주세요.");
 		String id = sc.nextLine();
+		System.out.println("비밀번호를 입력해 주세요.");
 		String pw = sc.nextLine();
-		LoginInfo login = null;
-		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+		StringBuffer sb = null;
+		try {
+			conn = db.getConnection();
+			sb = new StringBuffer();
+			sb.append("SELECT  1 AS SUCCESS")
+			  .append("  FROM  login_info")
+			  .append(" WHERE  ID = ?")
+			  .append("   AND  PASSWORD = ?");
+			   
+			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setString(1, id);
+			pstmt.setString(2, pw);
+			result = pstmt.executeQuery();
+			if (result.next()) {
+				if (result.getString("SUCCESS").equals("1")) {
+					return true;
+				}
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			db.close(conn, pstmt, result);
+		}
+		return true;
 	}
 	
 }
