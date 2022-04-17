@@ -1,7 +1,5 @@
 package ywy.chapter3.mydb;
 
-public class UserInfo {
-	
-	
-	
+public interface Model {
+
 }

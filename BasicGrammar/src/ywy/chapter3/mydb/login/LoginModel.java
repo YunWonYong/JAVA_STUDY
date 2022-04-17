@@ -1,11 +1,14 @@
-package ywy.chapter3.mydb;
+package ywy.chapter3.mydb.login;
 
-public class LoginInfo {
+import ywy.chapter3.mydb.Model;
+import ywy.chapter3.mydb.users.UserModel;
+
+public class LoginModel implements Model {
 	private String id;
 	private String password;
 	private String passwordErrorCount;
 	private String passwordErrorDate;
-	private UserInfo userInfo;
+	private UserModel userInfo;
 	
 	public String getId() {
 		return id;
@@ -31,10 +34,10 @@ public class LoginInfo {
 	public void setPasswordErrorDate(String passwordErrorDate) {
 		this.passwordErrorDate = passwordErrorDate;
 	}
-	public UserInfo getUserInfo() {
+	public UserModel getUserInfo() {
 		return userInfo;
 	}
-	public void setUserInfo(UserInfo userInfo) {
+	public void setUserInfo(UserModel userInfo) {
 		this.userInfo = userInfo;
 	}
 }
