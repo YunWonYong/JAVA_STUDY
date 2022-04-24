@@ -40,3 +40,92 @@ VALUES
  
  SELECT *
   FROM professor;
+
+-- 교수 추가
+INSERT INTO professor (
+PROFESSOR_CODE,		ID, 	SALARY,		ENT_DATE,
+RET_DATE,			USE_YN 
+)
+VALUES 
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),		
+'jpark',		
+4000000,	
+20220101,
+99991231,	
+'Y'),
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),			
+'iu',		
+3000000,	
+20220101,
+99991231,	
+'Y'),
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),		
+'heedo',		
+5000000,	
+20220101,
+99991231,	
+'Y'),
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),		
+'byj1015',		
+5000000,	
+20220101,
+99991231,	
+'Y'),
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),		
+'yurimk',		
+4000000,	
+20220101,
+99991231,	
+'Y'),
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),		
+'Seungwan',		
+5200000,	
+20220101,
+99991231,	
+'Y'),
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),		
+'jiwoo',		
+1200000,	
+20220101,
+99991231,	
+'Y'),
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),		
+'wooshik',		
+3500000,	
+20220101,
+99991231,	
+'Y'),
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),		
+'dami',		
+4500000,	
+20220101,
+99991231,	
+'Y'),
+((SELECT CONCAT('P', A.CODE)
+   FROM(SELECT LPAD(IFNULL(MAX(CAST(SUBSTRING(PROFESSOR_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE
+          FROM professor) AS A),			
+'seoha',	
+2500000,	
+20200102,
+20220101,		
+'N');
+
+select * from professor;
