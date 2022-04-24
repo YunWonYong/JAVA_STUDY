@@ -8,7 +8,6 @@ import java.util.Scanner;
 import ywy.chapter3.DBMS;
 import ywy.chapter3.JDBCManager;
 import ywy.chapter3.mydb.login.LoginRouter;
-import ywy.chapter3.mydb.users.UserModel;
 import ywy.chapter3.mydb.users.UserRouter;
 
 public class Main {

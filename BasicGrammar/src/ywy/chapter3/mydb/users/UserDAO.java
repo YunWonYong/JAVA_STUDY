@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import ywy.chapter3.JDBCManager;
 import ywy.chapter3.mydb.Model;
-import ywy.chapter3.mydb.login.LoginModel;
+import ywy.chapter3.mydb.major.MajorModel;
 
 public class UserDAO {
 
@@ -19,18 +21,33 @@ public class UserDAO {
 		ResultSet rs = null;
 		try {
 			conn = db.getConnection();
-			String query = new StringBuffer().append("SELECT  uinfo.ID").append("     ,  uinfo.NAME")
-					.append("     ,  uinfo.ENG_NAME").append("     ,  uinfo.GENDER").append("     ,  uinfo.BIRTH_DATE")
-					.append("     ,  uinfo.REAL_NUMBER").append("     ,  uinfo.ZIP_CODE")
-					.append("     ,  uinfo.ADDRESS").append("     ,  uinfo.ADDRESS_DTL").append("     ,  uinfo.EMAIL")
-					.append("     ,  uinfo.EMAIL_ADDRESS").append("     ,  uinfo.PHONE_NUMBER").append("     ,  CASE")
-					.append("            WHEN NOT pinfo.PROFESSOR_CODE IS NULL THEN '교수'")
-					.append("            WHEN NOT sinfo.STUDENT_CODE IS NULL THEN '학생'").append("            ELSE NULL")
-					.append("        END AS GRADE").append("  FROM  user_info uinfo").append("  LEFT  OUTER")
-					.append("  JOIN  professor pinfo").append("    ON  pinfo.ID = uinfo.ID").append("  LEFT  OUTER")
-					.append("  JOIN  student sinfo").append("    ON  sinfo.ID = uinfo.ID")
-					.append(" WHERE  uinfo.ID = ?").toString();
-			System.out.println(query);
+			String query = new StringBuffer()
+						   .append("SELECT  uinfo.ID")
+						   .append("     ,  uinfo.NAME")
+					       .append("     ,  uinfo.ENG_NAME")
+					       .append("     ,  uinfo.GENDER")
+					       .append("     ,  uinfo.BIRTH_DATE")
+					       .append("     ,  uinfo.REAL_NUMBER")
+					       .append("     ,  uinfo.ZIP_CODE")
+					       .append("     ,  uinfo.ADDRESS")
+					       .append("     ,  uinfo.ADDRESS_DTL")
+					       .append("     ,  uinfo.EMAIL")
+					       .append("     ,  uinfo.EMAIL_ADDRESS")
+					       .append("     ,  uinfo.PHONE_NUMBER")
+					       .append("     ,  CASE")
+					       .append("            WHEN NOT pinfo.PROFESSOR_CODE IS NULL THEN '교수'")
+					       .append("            WHEN NOT sinfo.STUDENT_CODE IS NULL THEN '학생'")
+					       .append("            ELSE NULL")
+					       .append("        END AS GRADE")
+					       .append("  FROM  user_info uinfo")
+					       .append("  LEFT  OUTER")
+					       .append("  JOIN  professor pinfo")
+					       .append("    ON  pinfo.ID = uinfo.ID")
+					       .append("  LEFT  OUTER")
+					       .append("  JOIN  student sinfo")
+					       .append("    ON  sinfo.ID = uinfo.ID")
+					       .append(" WHERE  uinfo.ID = ?")
+					       .toString();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
@@ -64,7 +81,10 @@ public class UserDAO {
 
 	public Model userRegister(Scanner sc, JDBCManager db, UserModel user) {
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement pstmtLogin = null;
+		PreparedStatement pstmtUser = null;
+		PreparedStatement pstmtStudent = null;
+		PreparedStatement pstmtStudentGrade = null;
 		try {
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
@@ -72,7 +92,8 @@ public class UserDAO {
 			while(true) {
 				System.out.println("사용하실 아이디를 입력해 주세요.");
 				id = sc.nextLine();	
-				if (userDuplicate(id, db)) {
+				if (userDuplicate(id, db) == false) {
+					System.out.println("사용하셔도 좋은 아이디입니다.");
 					break;
 				}
 				System.out.println("중복입니다.");
@@ -83,10 +104,11 @@ public class UserDAO {
 						   .append("INSERT INTO login_info(ID, PASSWORD)")
 						   .append("VALUES(?, ?)")
 					       .toString();
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, id);
-			pstmt.setString(2, pw);
-			int result = pstmt.executeUpdate();
+			pstmtLogin = conn.prepareStatement(query);
+			pstmtLogin.setString(1, id);
+			pstmtLogin.setString(2, pw);
+			
+			int result = pstmtLogin.executeUpdate();
 			if (result != 1) {
 				System.out.println("login info insert fail!!!");
 				return null;
@@ -94,39 +116,90 @@ public class UserDAO {
 
 			query = new StringBuffer()
 						   .append("INSERT INTO user_info(ID, NAME, ENG_NAME, GENDER, BIRTH_DATE, REAL_NUMBER, ZIP_CODE, ADDRESS, ADDRESS_DTL, EMAIL, EMAIL_ADDRESS, PHONE_NUMBER)")
-						   .append("VALUES(?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?)")
+						   .append("VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 					       .toString();
-			pstmt.executeUpdate(query);
-			pstmt.setString(1, id);
+			pstmtUser = conn.prepareStatement(query);
+			pstmtUser.setString(1, id);
 			System.out.println("성명을 입력해주세요.");
 			String name = sc.nextLine();
-			pstmt.setString(2, name);
+			pstmtUser.setString(2, name);
 			System.out.println("영문 성명을 입력해주세요.");
 			String engName = sc.nextLine();
-			pstmt.setString(3, engName);
+			pstmtUser.setString(3, engName);
 			System.out.println("1. 남성, 2. 여성");
 			String gender = sc.nextLine();
-			pstmt.setString(4, gender);
+			pstmtUser.setString(4, gender);
 
 			System.out.println("생년월일을 입력해주세요. ex) 19921107");
 			String birth = sc.nextLine();
-			pstmt.setString(5, birth);
+			pstmtUser.setString(5, birth);
 			
 			System.out.println("주민번호를 입력해주세요.");
 			String realNumber = sc.nextLine();
-			pstmt.setString(6, realNumber);
+			pstmtUser.setString(6, realNumber);
 			
 			System.out.println("우편번호를 입력해주세요.");
 			String zipCode = sc.nextLine();
-			pstmt.setInt(7, Integer.parseInt(zipCode));
+			pstmtUser.setInt(7, Integer.parseInt(zipCode));
 			
-			pstmt.setString(8, "");
-			pstmt.setString(9, "");
-			pstmt.setString(10, "");
-			pstmt.setString(11, "");
-			pstmt.setString(12, "");
-			result = pstmt.executeUpdate();
+			pstmtUser.setString(8, "");
+			pstmtUser.setString(9, "");
+			pstmtUser.setString(10, "");
+			pstmtUser.setString(11, "");
+			pstmtUser.setString(12, "");
+			result = pstmtUser.executeUpdate();
 			if(result != 1) {
+				System.out.println("사용자 등록 실패!!!");
+				return null;
+			}
+			query = new StringBuffer()
+					   .append("INSERT INTO student(STUDENT_CODE, ID, ENT_DATE, GRADE)")
+					   .append("VALUES(  ?")
+					   .append("       , ?")
+					   .append("       , (SELECT  DATE_FORMAT(NOW(), '%Y%m%d'))")
+					   .append("       , '1'")
+					   .append("      )")
+				       .toString();
+			pstmtStudent = conn.prepareStatement(query);
+			String studentCode = getNextStudentCode(db);
+			pstmtStudent.setString(1, studentCode);
+			pstmtStudent.setString(2, id);
+			result = pstmtStudent.executeUpdate();
+			if (result != 1) {
+				System.out.println("학생 등록 실패!!!");
+				return null;
+			}
+			
+			List<MajorModel> list = getMajor(db);
+			if(list == null || list.size() == 0) {
+				return null;
+			}
+			
+			StringBuffer sb = new StringBuffer();
+			int index = 0;
+			int range = list.size();
+			while (index < range) {
+				sb.append(++index)
+				  .append(". ")
+				  .append(list.get(index - 1).getMajorName());
+				if (index == range) {
+					break;
+				}
+				sb.append(" ");
+			}
+			System.out.println(sb.toString());
+			int myMajor = Integer.parseInt(sc.nextLine());
+			MajorModel major = list.get(myMajor - 1);
+			query = new StringBuffer()
+					.append("INSERT INTO student_grade(GRADE, STUDENT_CODE, MAJOR_CODE)")
+					.append("VALUES('1', ?, ?)")
+					.toString();
+			pstmtStudentGrade = conn.prepareStatement(query);
+			pstmtStudentGrade.setString(1, studentCode);
+			pstmtStudentGrade.setString(2, major.getMajorCode());
+			result = pstmtStudentGrade.executeUpdate();
+			if (result != 1) {
+				System.out.println("학과 생성 실패!!!");
 				return null;
 			}
 			conn.commit();
@@ -135,9 +208,8 @@ public class UserDAO {
 			user = null;
 		} finally {
 			try {
-				db.close(pstmt, conn);
+				db.close(pstmtLogin, pstmtUser, conn);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -145,6 +217,36 @@ public class UserDAO {
 		return user;
 	}
 	
+	private String getNextStudentCode(JDBCManager db) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = db.getConnection();
+			String query = new StringBuffer() 
+					   .append("SELECT  CONCAT('S', A.CODE) AS STUDENT_CODE")
+					   .append("  FROM  (")
+					   .append("         SELECT  LPAD(IFNULL(MAX(CAST(SUBSTRING(STUDENT_CODE, 2, 10) AS unsigned)),0) + 1, 9, 0) AS CODE")
+					   .append("           FROM  student")
+					   .append("        ) as A")
+				       .toString();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString("STUDENT_CODE");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				db.close(rs, pstmt, conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
 	public boolean userDuplicate(String id, JDBCManager db) {
 		String query = new StringBuffer()
 					   .append("SELECT  1")
@@ -159,7 +261,7 @@ public class UserDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			if(!rs.next()) {
+			if(rs.next()) {
 				return true;
 			}
 		} catch (SQLException e) {
@@ -168,10 +270,48 @@ public class UserDAO {
 			try {
 				db.close(rs, pstmt, conn);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		return true;
+		return false;
+	}
+	
+	public List<MajorModel> getMajor(JDBCManager db) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<MajorModel> list = new ArrayList<MajorModel>();
+		MajorModel major = null;
+		try {
+			conn = db.getConnection();
+			String query = new StringBuffer()
+						   .append("SELECT  MAJOR_CODE")
+						   .append("     ,  PROFESSOR_HEAD_USER_CODE")
+						   .append("     ,  MAJOR_NAME")
+						   .append("     ,  MAJOR_PHONE_NUMBER")
+						   .append("     ,  USE_YN")
+						   .append("  FROM  major")
+						   .append(" WHERE  USE_YN = 'Y'")
+						   .toString();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				major = new MajorModel();
+				major.setMajorCode(rs.getString("MAJOR_CODE"));
+				major.setProfessorHeadUserCode(rs.getString("PROFESSOR_HEAD_USER_CODE"));
+				major.setMajorName(rs.getString("MAJOR_NAME"));
+				major.setMajorPhoneNumber(rs.getString("MAJOR_PHONE_NUMBER"));
+				list.add(major);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				db.close(rs, pstmt, conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 }
