@@ -8,6 +8,7 @@ import java.util.Scanner;
 import ywy.chapter3.DBMS;
 import ywy.chapter3.JDBCManager;
 import ywy.chapter3.mydb.login.LoginRouter;
+import ywy.chapter3.mydb.users.UserModel;
 import ywy.chapter3.mydb.users.UserRouter;
 
 public class Main {
@@ -34,22 +35,29 @@ public class Main {
 		System.out.println("어서오세요. 이직 대학입니다.");
 		Scanner sc = new Scanner(System.in);
 		String cursor = null;
-		Router[] router = new Router[] {new LoginRouter(), new UserRouter()};
+		Router[] routers = new Router[] {new LoginRouter(), new UserRouter()};
+		Router router = null;
+		Model user = null;
 		while(true) {
 			System.out.println("1. 로그인, 2. 대학등록, 3. 탈퇴, 4. 종료");
 			cursor = sc.nextLine();
+			router = routers[getRouterIndex(cursor)];
 			switch(cursor) {
 			case "1":
-				Model user = router[getRouterIndex(cursor)].execute(sc, db, cursor);
+				user = router.execute(sc, db, "1");
 				if (user != null) {
 					System.out.println("로그인 성공");
-					System.out.println(user.toString());
-					return;
+					routers[getRouterIndex("2")].execute(sc, db, user);
+					break;
 				}
 				System.out.println("아이디와 비밀번호가 다릅니다.");
 				break;
 			case "2":
-				
+				user = router.execute(sc, db, "2");
+				if (user == null) {
+					System.out.println("회원 가입 실패");
+					return;
+				}
 				break;
 			case "3":
 				

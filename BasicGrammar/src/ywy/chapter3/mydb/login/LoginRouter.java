@@ -24,4 +24,9 @@ public class LoginRouter implements Router {
 		return null;
 	}
 
+	@Override
+	public Model execute(Scanner sc, JDBCManager db, Model model) {
+		return null;
+	}
+
 }

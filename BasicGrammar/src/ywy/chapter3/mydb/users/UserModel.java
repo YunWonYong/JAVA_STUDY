@@ -15,13 +15,15 @@ public class UserModel implements Model{
 	private String email;
 	private String emailAddress;
 	private String phoneNumber;
+	private String div;
 	
 	public UserModel() {
 		
 	}
 
 	public UserModel(String id, String name, String engName, String gender, String birthDate, String realNumber,
-			String zipCode, String address, String addressDtl, String email, String emailAddress, String phoneNumber) {
+			String zipCode, String address, String addressDtl, String email, String emailAddress, String phoneNumber,
+			String div) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -35,6 +37,7 @@ public class UserModel implements Model{
 		this.email = email;
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
+		this.div = div;
 	}
 	
 	public String getId() {
@@ -133,11 +136,19 @@ public class UserModel implements Model{
 		this.phoneNumber = phoneNumber;
 	}
 
+	public String getDiv() {
+		return div;
+	}
+
+	public void setDiv(String div) {
+		this.div = div;
+	}
+
 	@Override
 	public String toString() {
 		return "UserModel [id=" + id + ", name=" + name + ", engName=" + engName + ", gender=" + gender + ", birthDate="
 				+ birthDate + ", realNumber=" + realNumber + ", zipCode=" + zipCode + ", address=" + address
 				+ ", addressDtl=" + addressDtl + ", email=" + email + ", emailAddress=" + emailAddress
-				+ ", phoneNumber=" + phoneNumber + "]";
+				+ ", phoneNumber=" + phoneNumber + ", div=" + div + "]";
 	}
 }
