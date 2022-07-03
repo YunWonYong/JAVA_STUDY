@@ -1,10 +1,10 @@
-package ywy.chapter3;
+package ywy.chapter3.db;
 
 public enum DBMS {
 	ORACLE("oracle.jdbc.OracleDriver"),
 	MY_SQL("com.mysql.cj.jdbc.Driver"),
 	MS_SQL(""),
-	POSTGRESQL("org.postgresql.Driver");
+	POSTGRE_SQL("org.postgresql.Driver");
 	
 	private String defaultDriver;
 	DBMS(String driver) {

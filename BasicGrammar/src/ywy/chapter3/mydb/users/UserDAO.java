@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import ywy.chapter3.JDBCManager;
+import ywy.chapter3.db.JDBCManager;
 import ywy.chapter3.mydb.Model;
 import ywy.chapter3.mydb.major.MajorModel;
 
 public class UserDAO {
-
+	
+	private String id; 
+	
 	public UserModel getInfo(JDBCManager db, String id) {
 		UserModel user = null;
 		Connection conn = null;
@@ -78,17 +80,86 @@ public class UserDAO {
 		}
 		return user;
 	}
-
-	public Model userRegister(Scanner sc, JDBCManager db, UserModel user) {
+	
+	public Model studentRegister(Scanner sc, JDBCManager db, UserModel user) {
 		Connection conn = null;
-		PreparedStatement pstmtLogin = null;
-		PreparedStatement pstmtUser = null;
 		PreparedStatement pstmtStudent = null;
 		PreparedStatement pstmtStudentGrade = null;
 		try {
+			conn = userRegister(sc, db);
+			String query = new StringBuffer()
+							   .append("INSERT INTO student(STUDENT_CODE, ID, ENT_DATE, GRADE)")
+							   .append("VALUES(  ?")
+							   .append("       , ?")
+							   .append("       , (SELECT  DATE_FORMAT(NOW(), '%Y%m%d'))")
+							   .append("       , '1'")
+							   .append("      )")
+						       .toString();
+			pstmtStudent = conn.prepareStatement(query);
+			String studentCode = getNextStudentCode(db);
+			pstmtStudent.setString(1, studentCode);
+			pstmtStudent.setString(2, id);
+			int result = pstmtStudent.executeUpdate();
+			if (result != 1) {
+				System.out.println("학생 등록 실패!!!");
+				return null;
+			}
+			
+			List<MajorModel> list = getMajor(db);
+			if(list == null || list.size() == 0) {
+				return null;
+			}
+			
+			StringBuffer sb = new StringBuffer();
+			int index = 0;
+			int range = list.size();
+			while (index < range) {
+				sb.append(++index)
+				  .append(". ")
+				  .append(list.get(index - 1).getMajorName());
+				if (index == range) {
+					break;
+				}
+				sb.append(" ");
+			}
+			System.out.println(sb.toString());
+			int myMajor = Integer.parseInt(sc.nextLine());
+			MajorModel major = list.get(myMajor - 1);
+			query = new StringBuffer()
+					.append("INSERT INTO student_grade(GRADE, STUDENT_CODE, MAJOR_CODE)")
+					.append("VALUES('1', ?, ?)")
+					.toString();
+			pstmtStudentGrade = conn.prepareStatement(query);
+			pstmtStudentGrade.setString(1, studentCode);
+			pstmtStudentGrade.setString(2, major.getMajorCode());
+			result = pstmtStudentGrade.executeUpdate();
+			if (result != 1) {
+				System.out.println("학과 생성 실패!!!");
+				return null;
+			}
+			conn.commit();
+			return user;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (conn != null) {
+				try {
+					db.close(pstmtStudent, pstmtStudentGrade, conn);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public Connection userRegister(Scanner sc, JDBCManager db) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmtLogin = null;
+		PreparedStatement pstmtUser = null;
+		try {
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
-			String id = null;
 			while(true) {
 				System.out.println("사용하실 아이디를 입력해 주세요.");
 				id = sc.nextLine();	
@@ -152,69 +223,16 @@ public class UserDAO {
 				System.out.println("사용자 등록 실패!!!");
 				return null;
 			}
-			query = new StringBuffer()
-					   .append("INSERT INTO student(STUDENT_CODE, ID, ENT_DATE, GRADE)")
-					   .append("VALUES(  ?")
-					   .append("       , ?")
-					   .append("       , (SELECT  DATE_FORMAT(NOW(), '%Y%m%d'))")
-					   .append("       , '1'")
-					   .append("      )")
-				       .toString();
-			pstmtStudent = conn.prepareStatement(query);
-			String studentCode = getNextStudentCode(db);
-			pstmtStudent.setString(1, studentCode);
-			pstmtStudent.setString(2, id);
-			result = pstmtStudent.executeUpdate();
-			if (result != 1) {
-				System.out.println("학생 등록 실패!!!");
-				return null;
-			}
-			
-			List<MajorModel> list = getMajor(db);
-			if(list == null || list.size() == 0) {
-				return null;
-			}
-			
-			StringBuffer sb = new StringBuffer();
-			int index = 0;
-			int range = list.size();
-			while (index < range) {
-				sb.append(++index)
-				  .append(". ")
-				  .append(list.get(index - 1).getMajorName());
-				if (index == range) {
-					break;
-				}
-				sb.append(" ");
-			}
-			System.out.println(sb.toString());
-			int myMajor = Integer.parseInt(sc.nextLine());
-			MajorModel major = list.get(myMajor - 1);
-			query = new StringBuffer()
-					.append("INSERT INTO student_grade(GRADE, STUDENT_CODE, MAJOR_CODE)")
-					.append("VALUES('1', ?, ?)")
-					.toString();
-			pstmtStudentGrade = conn.prepareStatement(query);
-			pstmtStudentGrade.setString(1, studentCode);
-			pstmtStudentGrade.setString(2, major.getMajorCode());
-			result = pstmtStudentGrade.executeUpdate();
-			if (result != 1) {
-				System.out.println("학과 생성 실패!!!");
-				return null;
-			}
-			conn.commit();
+			return conn;
 		} catch (Exception e) {
-			e.printStackTrace();
-			user = null;
+			throw e;
 		} finally {
 			try {
-				db.close(pstmtLogin, pstmtUser, conn);
+				db.close(pstmtLogin, pstmtUser);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-
-		return user;
 	}
 	
 	private String getNextStudentCode(JDBCManager db) {

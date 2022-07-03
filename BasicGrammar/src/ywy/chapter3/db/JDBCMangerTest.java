@@ -1,4 +1,4 @@
-package ywy.chapter3;
+package ywy.chapter3.db;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

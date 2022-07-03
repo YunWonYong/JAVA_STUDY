@@ -2,7 +2,7 @@ package ywy.chapter3.mydb.users;
 
 import java.util.Scanner;
 
-import ywy.chapter3.JDBCManager;
+import ywy.chapter3.db.JDBCManager;
 import ywy.chapter3.mydb.Model;
 import ywy.chapter3.mydb.Router;
 
@@ -16,7 +16,7 @@ public class UserRouter implements Router {
 			break;
 		case "2":
 			UserModel user = new UserModel();
-			return new UserDAO().userRegister(sc, db, user);
+			return new UserDAO().studentRegister(sc, db, user);
 		default:
 			return null;
 		}

@@ -1,35 +1,17 @@
 package ywy.chapter3.mydb;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.util.Properties;
 import java.util.Scanner;
 
-import ywy.chapter3.DBMS;
-import ywy.chapter3.JDBCManager;
+import ywy.chapter3.db.JDBCManager;
+import ywy.chapter3.db.JDBCManagerFactory;
 import ywy.chapter3.mydb.login.LoginRouter;
 import ywy.chapter3.mydb.users.UserRouter;
 
 public class Main {
+	private static final String PROPERTIES_PATH = "/src/ywy/chapter3/MySQL.properties";
 	
 	public static void main(String[] args) throws Exception {
-		JDBCManager db = null;
-		String resource = new StringBuffer(System.getProperty("user.dir"))
-						  .append("/src/ywy/chapter3/DB.properties").toString();
-		Properties p = null;		
-		try {
-			p = new Properties();
-			FileInputStream fis = new FileInputStream(resource);
-			p.load(new BufferedInputStream(fis));
-			db = new JDBCManager.Builder(DBMS.MY_SQL)
-							    .setUserName(p.getProperty("USER_NAME"))
-							    .setPassword(p.getProperty("PASSWORD"))
-							    .setUrl(p.getProperty("URL"))
-							    .build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return;
-		}
+		JDBCManager jdbcManager = JDBCManagerFactory.getJDBCManager(PROPERTIES_PATH);
 		
 		System.out.println("어서오세요. 이직 대학입니다.");
 		Scanner sc = new Scanner(System.in);
@@ -43,16 +25,16 @@ public class Main {
 			router = routers[getRouterIndex(cursor)];
 			switch(cursor) {
 			case "1":
-				user = router.execute(sc, db, "1");
+				user = router.execute(sc, jdbcManager, "1");
 				if (user != null) {
 					System.out.println("로그인 성공");
-					routers[getRouterIndex("2")].execute(sc, db, user);
+					routers[getRouterIndex("2")].execute(sc, jdbcManager, user);
 					break;
 				}
 				System.out.println("아이디와 비밀번호가 다릅니다.");
 				break;
 			case "2":
-				user = router.execute(sc, db, "2");
+				user = router.execute(sc, jdbcManager, "2");
 				if (user == null) {
 					System.out.println("회원 가입 실패");
 					return;
