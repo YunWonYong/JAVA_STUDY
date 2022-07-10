@@ -1,4 +1,4 @@
-package ywy.chapter3.db;
+package ywy.chapter3.mydb.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import ywy.chapter3.db.JDBCManager;
 import ywy.chapter3.mydb.Model;
+import ywy.chapter3.mydb.db.JDBCManager;
 import ywy.chapter3.mydb.users.UserDAO;
 
 public class LoginDAO {

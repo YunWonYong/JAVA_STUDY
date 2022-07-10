@@ -2,9 +2,9 @@ package ywy.chapter3.mydb.users;
 
 import java.util.Scanner;
 
-import ywy.chapter3.db.JDBCManager;
 import ywy.chapter3.mydb.Model;
 import ywy.chapter3.mydb.Router;
+import ywy.chapter3.mydb.db.JDBCManager;
 
 public class UserRouter implements Router {
 

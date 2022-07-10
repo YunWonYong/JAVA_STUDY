@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import ywy.chapter3.db.JDBCManager;
 import ywy.chapter3.mydb.Model;
+import ywy.chapter3.mydb.db.JDBCManager;
 import ywy.chapter3.mydb.major.MajorModel;
 
 public class UserDAO {

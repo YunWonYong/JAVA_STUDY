@@ -2,21 +2,23 @@ package ywy.chapter3.mydb;
 
 import java.util.Scanner;
 
-import ywy.chapter3.db.JDBCManager;
-import ywy.chapter3.db.JDBCManagerFactory;
+import ywy.chapter3.mydb.db.JDBCManager;
+import ywy.chapter3.mydb.db.JDBCManagerFactory;
 import ywy.chapter3.mydb.login.LoginRouter;
+import ywy.chapter3.mydb.navigation.Navigation;
+import ywy.chapter3.mydb.navigation.Navigator;
 import ywy.chapter3.mydb.users.UserRouter;
 
 public class Main {
 	private static final String PROPERTIES_PATH = "/src/ywy/chapter3/MySQL.properties";
 	
 	public static void main(String[] args) throws Exception {
+		Scanner sc = new Scanner(System.in);
 		JDBCManager jdbcManager = JDBCManagerFactory.getJDBCManager(PROPERTIES_PATH);
 		
 		System.out.println("어서오세요. 이직 대학입니다.");
-		Scanner sc = new Scanner(System.in);
 		String cursor = null;
-		Router[] routers = new Router[] {new LoginRouter(), new UserRouter()};
+		Router[] routers = new Router[] { new LoginRouter(), new UserRouter() };
 		Router router = null;
 		Model user = null;
 		while(true) {
